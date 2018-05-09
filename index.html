@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Matrimony</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+<script>
+
+window.localStorage.removeItem('ispopup');
+  function addOption(fname) {
+    if($('.'+fname+'_multiple').prop('checked') == true){
+      var myType = "checkbox";
+    }  else {
+      var myType = "radio";
+    }
+    var appVal = '<li class="list-group-item"><div class="row"><div class="col-1 '+fname+'_swap"><input type="'+myType+'" name="'+fname+'_check" class="'+fname+'_check option-selected" style="margin-top: 12px;" value="1"></div><div class="col-9"><input type="text" name="'+fname+'_text" class="form-control option-value" value=""></div><div class="col-2"><span onclick="removeOption(this);" style="line-height: 37px;"><i class="fa fa-trash-o" aria-hidden="true"></i></span></div></div></li>';
+    $('.optul').append(appVal);
+  }
+  function removeOption(t) {
+    $(t).parent().parent().parent().remove();
+  }
+   
+  function swapChk2Radio(fname) {
+    if($('.'+fname+'_multiple').prop('checked') == true){
+      var myType = "checkbox";
+    }  else {
+      var myType = "radio";
+    }
+   // console.log(myType);
+     $('.optul .'+fname+'_swap').each(function(i) {
+     $(this).html('<input type="'+myType+'" name="'+fname+'_check" class="'+fname+'_check" style="margin-top: 12px;" value="1">');
+    });
+  }
+</script>
+
+</head>
+<body>
+  <app-root>Loading...</app-root>
+</body>
+</html>
+
