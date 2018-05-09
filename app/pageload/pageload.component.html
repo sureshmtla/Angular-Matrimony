@@ -1,0 +1,20 @@
+<div class="card-block" id="basicView" *ngIf="moduleData!=null">
+
+     <ng-container *ngFor="let jArr of moduleFields">
+         <ng-container *ngIf="jArr.sectionId>0">
+             <ng-container *ngFor="let cols of jArr.col" >
+                 <div class="col-{{ 12 / (jArr.col?.length) }} column-div">
+                     <ng-container *ngFor="let mf of cols.fields; let x = index" >
+                           <ng-container *ngIf="mf.isActive==1 && (mf?.view==null || mf?.view=='' || mf?.view=='View')">
+                                <div class="row">
+                                    <label class="col-sm-3 text-muted">{{mf.label}}</label>
+                                    <div class="col-sm-9 text-capitalize">{{moduleData[mf.name]}}</div>
+                                </div>
+                           </ng-container>
+                     </ng-container>
+                 </div>
+             </ng-container>
+         </ng-container>
+       </ng-container>   
+    </div>
+ 

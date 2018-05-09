@@ -1,0 +1,28 @@
+
+
+/* Draggable*/
+.gu-mirror{position:fixed!important;margin:0!important;z-index:9999!important;opacity:.8;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";filter:alpha(opacity=80)}.gu-hide{display:none!important}.gu-unselectable{-webkit-user-select:none!important;-moz-user-select:none!important;-ms-user-select:none!important;user-select:none!important}.gu-transit{opacity:.2;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";filter:alpha(opacity=20)}
+
+ul[ngui-sortable] {
+  padding: 10px; 
+  border: 1px solid #ccc;
+ list-style: none; 
+ display: block
+}
+ul[ngui-sortable] li {
+ padding: 10px 5px;
+ background: #4986e7;
+ color: #fff; 
+ border: 1px solid #fff;
+ display: block; 
+ position: relative
+}
+ul[ngui-sortable] li.drag-enter {
+ border-top: 2px solid yellow;
+}
+
+.ul-two-cal-container {
+  -webkit-column-count: 2; /* Chrome, Safari, Opera */
+  -moz-column-count: 2; /* Firefox */
+  column-count: 2;
+}

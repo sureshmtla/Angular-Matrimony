@@ -1,0 +1,57 @@
+<div class="">
+        <form id="packForm">
+  <div>
+      <nav class="navbar navbar-light bg-light">
+          <a class="navbar-brand">{{(context.title)}}</a>
+        </nav>
+  </div>
+  <div class="row m-0 p-1">
+        
+    <div *ngIf="context.type=='contact';else else_id">
+      <input type="hidden" name="contactId" value="{{(context.moduleData['contactId'])}}"/>
+  </div>
+  
+  <ng-template #else_id><input type="hidden" name="id" value="{{(context.moduleData!=null?context.moduleData['id']:0)}}"/></ng-template>
+  
+  <ng-container *ngFor="let jArr of context.moduleFields">
+      <ng-container *ngIf="jArr.sectionId>0">
+          <ng-container *ngFor="let cols of jArr.col" >
+              <div class="col-{{ 12 / (jArr.col?.length) }} column-div">
+                  <ng-container *ngFor="let mf of cols.fields; let x = index" >
+                        <ng-container *ngIf="(mf.view!=null && mf.view!='' && mf.view!='Edit' && mf.isActive==1)">                          
+                            <input type="text" id="input{{(mf.name)}}" name="{{(mf.name)}}" value="{{(context.moduleData!=null?context.moduleData[mf.name]:'')}}" />
+                        </ng-container>
+                        <ng-container *ngIf="mf.isActive==1 && (mf.view==null || mf.view=='' || mf.view=='Edit')">
+                                <label for="input_{{(mf.name)}}" class="col-md-4 control-label {{(mf.required>0?'req':'')}}">{{mf.label}}</label>
+                                <div class="col-md-8">
+                                    <div [ngSwitch]="mf.type">
+                                        <input *ngSwitchCase="'hidden'" type="hidden" class="form-control" id="input{{(mf.name)}}" name="{{(mf.name)}}" value="{{(context.moduleData!=null?context.moduleData[mf.name]:'')}}" placeholder="{{(mf.label)}}" />
+                                        <input  *ngSwitchCase="'text'"type="text" class="form-control" id="input{{(mf.name)}}" name="{{(mf.name)}}" value="{{(context.moduleData!=null?context.moduleData[mf.name]:'')}}" placeholder="{{(mf.label)}}" />
+                                        <input  *ngSwitchCase="'date'" type="text" class="form-control datepick {{(mf.required>0?'reqt':'')}}" id="input{{(mf.name)}}" name="{{(mf.name)}}" value="{{(context.moduleData!=null?context.moduleData[mf.name]:'')}}" placeholder="{{(mf.label)}}" />
+                                        <input  *ngSwitchCase="'datetime'" type="text" class="form-control datetimepick {{(mf.required>0?'reqt':'')}}" id="{{input(mf.name)}}" name="{{(mf.name)}}" value="{{(context.moduleData!=null?context.moduleData[mf.name]:'')}}" placeholder="{{(mf.label)}}" />
+  
+                                        <select  *ngSwitchCase="'select'" id="input{{(mf.name)}}" name="{{(mf.name)}}" class="form-control {{(mf.required>0?'reqt':'')}} {{(mf.multiple==1?'m_select2j':'select2j')}} {{(mf.multiple==1?'multiple=multiple':'')}}">
+                                            <ng-container *ngFor="let valA of mf.values">
+                                                <option value="{{(valA.value)}}"  [selected]="(context.moduleData!=null && context.moduleData[mf.name]==valA.value?'selected':'')">{{valA.label}}</option>
+                                            </ng-container>
+                                        </select>
+                                        <textarea *ngSwitchCase="'textarea'" class="form-control" id="input{{(mf.name)}}" name="{{(mf.name)}}" placeholder="{{(mf.label)}}">{{context.moduleData!=null?context.moduleData[mf.name]:''}}</textarea>
+                                        <input  *ngSwitchDefault type="{{(mf.type)}}" class="form-control" id="input" name="{{(mf.name)}}" value="{{(context.moduleData!=null?context.moduleData[mf.name]:'')}}" placeholder="{{(mf.label)}}" />
+                                    </div>
+                                    <div class="messages"></div>
+                                </div>
+                        </ng-container>
+                  </ng-container>
+              </div>
+          </ng-container>
+      </ng-container>
+  </ng-container>
+  
+
+      
+                <div class="btn btn-primary" style="margin: 5px 0px;" (click)="onSavePack()">Update</div>
+                <div class="btn btn-secondary"  (click)="closeModal()">Cancel</div>
+            
+      </div>
+      </form>
+  </div>

@@ -1,0 +1,196 @@
+
+<div *ngIf="lMathes?.length == 0"  class="m-a-0 white bg-shadow">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12">
+          <div style="text-align: center;font-size: 25px;color: #999;font-weight: bold;padding: 40px;">
+            No Matches Found
+           </div> 
+         </div>
+       </div>
+     </div>
+    </div>         
+</div>
+<div *ngFor="let contact of lMathes; let i = index"  class="m-a-0 white bg-shadow">
+  <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-7">
+              <div class="text-capitalize" style="font-weight:bold;">{{contact.firstName}} {{contact.lastName}}<span class="text-muted">( {{contact.uid}} )</span></div>
+              <div class="text-muted"><cite title="">{{contact.city}} {{contact.state}} {{contact.country}} <i class="fa fa-map-marker" aria-hidden="true"></i></cite></div>
+              <div style="position: absolute;right: 0;top: 0px;">
+                  <span *ngIf="(contact.status=='Interested' && contact.ostatus=='Interested');else second;" class="fa-stack fa-sm text-primary">
+                      <i class="fa fa-check fa-stack-1x" style="margin-left:4px"></i>
+                      <i class="fa fa-check  fa-stack-1x" style="margin-left:-2px"></i>
+                  </span>
+                  <ng-template #second>
+                   <span *ngIf="(contact.status=='Interested' || contact.ostatus=='Interested');else third;" class="fa-stack fa-sm">
+                      <i class="fa fa-check fa-stack-1x text-primary" style="margin-left:4px"></i>
+                      <i class="fa fa-check  fa-stack-1x text-muted" style="margin-left:-2px"></i>
+                  </span>
+                </ng-template>
+                <ng-template #third>
+                  <span *ngIf="(contact.status!='' && contact.ostatus!='');else fourth;" class="fa-stack fa-sm text-muted">
+                      <i class="fa fa-check fa-stack-1x" style="margin-left:4px"></i>
+                      <i class="fa fa-check  fa-stack-1x" style="margin-left:-2px"></i>
+                  </span>
+                  </ng-template>
+                  <ng-template #fourth>
+                  <span *ngIf="(contact.status!='' || contact.ostatus!='')" class="fa-stack fa-sm text-muted">
+                      <i class="fa fa-check fa-stack-1x" style="margin-left:4px"></i>
+                  </span>
+                </ng-template>
+              </div>
+          </div>
+          <div class="col-5" style="padding-top: 3px;">
+              <div class="block" style="float: right;">
+                  <span *ngIf="contact.requestMessage==0" title="send request to messaging" (click)="updateReq(contact.uid,'message',contact);" class="btn btn-icon btn-social rounded white btn-md bg-shadow">
+                    <i class="fa fa-envelope"></i>
+                    <i class="fa fa-envelope indigo"></i>
+                  </span>
+                  <span *ngIf="contact.requestMessage==1" title="already sent request to messaging" class="btn btn-icon rounded white btn-md bg-shadow">
+                    <i class="fa fa-envelope indigo"></i>
+                  </span>
+                  <span *ngIf="contact.requestMobile==0" title="send request to mobile number" (click)="updateReq(contact.uid,'mobile',contact);" class="btn btn-icon btn-social rounded white btn-md bg-shadow">
+                    <i class="fa fa-mobile"></i>
+                    <i class="fa fa-mobile light-blue"></i>
+                  </span>
+                  <span *ngIf="(contact.requestMobile==1)" title="already sent request to mobile number" class="btn btn-icon rounded white btn-md bg-shadow">
+                    <i class="fa fa-mobile light-blue"></i> 
+                  </span>
+                  <span *ngIf="(contact.requestHoroscope==0)" title="send request to horoscope" (click)="updateReq(contact.uid,'horoscope',contact);" class="btn btn-icon btn-social rounded white btn-md bg-shadow">
+                    <i class="fa fa-globe"></i>
+                    <i class="fa fa-globe red"></i>
+                  </span>
+                  <span *ngIf="(contact.requestHoroscope==1)" title="already sent request to horoscope" class="btn btn-icon rounded white btn-md bg-shadow">
+                    <i class="fa fa-globe red"></i>
+                  </span>
+            <!--
+                  <span title="Mark profile as viewed" (click)="updateProfileStatus(contact.uid,'Viewed',contact);" class="btn btn-icon btn-social rounded white btn-md">
+                    <i class="fa fa-info"></i>
+                    <i class="fa fa-check cyan-600"></i>
+                  </span>
+
+                -->
+              </div>
+            </div>
+      </div>
+    </div>
+      <div class="card-body p-1">
+          <div class="row">
+          <div class="col-3">
+              <div id="carouselExampleControls1'" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+                  <div class="carousel-item active" style="padding:5px;">
+                      
+                      <div *ngIf="(contact.requestPhoto==0)" class="photo-req" (click)="updateReq(contact.uid,'photo',contact);">photo request</div>
+                      <div *ngIf="(contact.requestPhoto==1)" class="photo-req">photo requested</div>
+                      <span  onclick=""><img class="d-block img-fluid img-rounded img-responsive" alt="{{(contact.firstName)}} {{(contact.lastName)}}"style="max-height:170px;" src="{{(apiUrl)}}/image/{{(contact.uid)}}/1.jpg"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+             <div class="col-9">
+                      <div class="row m-a-0">
+                  <div class="col-12 p-a-0" style="height:110px;overflow:hidden;">
+                    <div class="row">
+                    <div class="col-md-7">
+                     
+                        <ng-container *ngIf="(contact.age!=null && contact.age!='' && contact.heightInc!=null && contact.heightInc!='')">
+                            <div class="row">
+                          <div class="col-3 text-muted">Age,Height</div>
+                          <div class="col-9 text-capitalize short-text-color">{{contact.age}} yrs, {{contact.heightInc}} ft.</div>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="(contact.course!=null && contact.course!='')">
+                            <div class="row">
+                          <div class="col-3 text-muted">Education</div>
+                          <div class="col-9 text-capitalize short-text-color">{{contact.course}}</div>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="(contact.occupation!=null && contact.occupation!='')">
+                            <div class="row">
+                          <div class="col-3 text-muted">Occupation</div>
+                          <div class="col-9 text-capitalize short-text-color">{{contact.occupation}}</div>
+                          </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="col-md-5">
+                          <img *ngIf="reqProcessing===contact.uid" src="assets/images/loading2.gif" style="height:80px;width:120px;">
+                            <ng-container *ngIf="(contact.status=='Accepted' || contact.ostatus=='Accepted'); else firstd;">
+                                  <div *ngIf="(contact.status=='Accepted' && contact.createdById!=currentUser.userId) || (contact.ostatus=='Accepted' && contact.createdById==currentUser.userId)" class="text-capitalize interest-sent">{{contact.firstName}} {{contact.lastName}} is <span class="btn btn-info btn-sm">Accepted</span> in your interest.</div>
+                                  <div *ngIf="(contact.status=='Accepted' && contact.createdById==currentUser.userId) || (contact.ostatus=='Accepted' && contact.createdById!=currentUser.userId)" class="text-capitalize interest-sent">You have <span class="btn btn-info btn-sm">Accepted</span> {{(currentUser.gender=='Male'?'her':'his')}} profile.</div>
+                            </ng-container>
+                            <ng-template #firstd>
+                            <ng-container *ngIf="(contact.status=='Rejected' || contact.ostatus=='Rejected'); else secondd;">
+                                  <div *ngIf="(contact.status=='Rejected' && contact.createdById!=currentUser.userId) || (contact.ostatus=='Rejected' && contact.createdById==currentUser.userId)" class="text-capitalize interest-sent">{{contact.firstName}} {{contact.lastName}} is <span class="btn btn-info btn-sm">declined</span> in your interest.</div>
+                              <ng-container  *ngIf="(contact.status=='Rejected' && contact.createdById==currentUser.userId) || (contact.ostatus=='Rejected' && contact.createdById!=currentUser.userId)">
+                                  <div  class="text-capitalize interest-sent">You have <span class="btn btn-info btn-sm">declined</span> {{(currentUser.gender=='Male'?'her':'his')}} profile.</div>
+                                  <div>I like your profile and I want to get in touch with you.<br>Please accept if interested.</div>
+                                  <div>Changed your mind? <div class="btn btn-primary btn-sm" (click)="updateProfileStatus(contact.uid,'Accepted',contact);">ACCEPT</div></div>
+                              </ng-container>
+                              </ng-container>
+                            </ng-template>
+                            <ng-template #secondd>
+                            <ng-container *ngIf="(contact.status=='Interested' || contact.ostatus=='Interested');else thirdd;">
+                                <ng-container *ngIf="(contact.status=='Interested' && contact.createdById!=currentUser.userId) || (contact.ostatus=='Interested' && contact.createdById==currentUser.userId); then both; else mediv;"></ng-container>
+                                <ng-template #both>
+                                    <div class="text-muted interest-sent">I like your profile and I want to get in touch with you.<br>Please accept if interested?.</div>
+                                    <div><div class="btn btn-primary btn-sm" (click)="updateProfileStatus(contact.uid,'Accepted',contact);">Accept</div>&nbsp;&nbsp;<div class="btn btn-warning btn-sm" (click)="updateProfileStatus('contact.uid','Rejected',contact);">Declined</div></div>
+                                </ng-template>
+
+                                <ng-template #mediv>
+                                  <div class="text-capitalize text-muted interest-sent">{{contact.firstName}} {{contact.lastName}} is yet to respond to your interest.</div>
+                                </ng-template>
+                                </ng-container>
+                            </ng-template>
+                            <ng-template  #thirdd>
+                            <ng-container *ngIf="((contact.status=='Viewed' || contact.ostatus=='Viewed') && contact.viewedOn!='');else fourthd;">
+                                <div class="text-capitalize viewdiv"><span>Recently Viewed on</span><br /><span class="date">{{contact.viewedOn}}</span></div>
+                                <div class="interet-req">Interested in {{(currentUser.gender=='Male'?'her':'him')}}? </div>
+                                <div class="btn btn-primary btn-md" (click)="updateProfileStatus(contact.uid,'Interested',contact);">Yes</div>
+                                <div class="btn btn-default btn-md" (click)="updateProfileStatus(contact.uid,'Shortlist',contact);">Short List</div>
+                            </ng-container>
+                            </ng-template>
+                            <ng-template #fourthd>
+                                <ng-container *ngIf="(contact.status=='Shortlist' || contact.ostatus=='Shortlist'); else fifththd;">
+                                    <div *ngIf="(contact.status=='Shortlist' && contact.createdById!=currentUser.userId) || (contact.ostatus=='Shortlist' && contact.createdById==currentUser.userId)" class="text-capitalize interest-sent">{{contact.firstName}} {{contact.lastName}} is <span class="btn btn-info btn-sm">Short List</span> in your profile.</div>
+                                    <div *ngIf="(contact.status=='Shortlist' && contact.createdById==currentUser.userId) || (contact.ostatus=='Shortlist' && contact.createdById!=currentUser.userId)" class="text-capitalize interest-sent">You have <span class="btn btn-info btn-sm">Short List</span> {{(currentUser.gender=='Male'?'her':'his')}} profile.</div>
+                                    <div class="interet-req">Interested in {{(currentUser.gender=='Male'?'her':'him')}}? </div>
+                                    <div class="btn btn-primary btn-md" (click)="updateProfileStatus(contact.uid,'Interested',contact);">Yes</div>
+                                    <div class="btn btn-default btn-md" (click)="updateProfileStatus(contact.uid,'Shortlist',contact);">Short List</div>
+                                </ng-container>
+                            </ng-template>
+                            <ng-template #fifththd>
+                                <div class="interet-req">Interested in {{(currentUser.gender=='Male'?'her':'him')}}?</div>
+                                <div class="btn btn-primary btn-md" (click)="updateProfileStatus(contact.uid,'Interested',contact);">Yes</div>
+                                <div class="btn btn-default btn-md" (click)="updateProfileStatus(contact.uid,'Shortlist',contact);">Short List</div>
+                              </ng-template>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12" style="margin-top:10px;border-top: 1px dashed #ddd;padding-top:5px;">
+
+                          <div style="float:left;max-width:70%;">
+                            <div class="text-capitalize"> About {{(currentUser.gender=='Male'?'Her':'Him')}}</div>
+                            <div class="text-capitalize short-text-color text-wrap-note">{{contact.notes}}</div>
+                          </div>
+                          <div style="float:right;">
+                            <div class="btn btn-primary text-capitalize right bg-shadow"><a routerLink="view/{{(contact.uid)}}">view full profile</a></div>
+                      </div>
+
+                  </div>
+
+                
+                    
+                     
+
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+</div>

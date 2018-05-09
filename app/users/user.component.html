@@ -1,0 +1,102 @@
+
+		<div class="item" style="text-align:center;" *ngIf="user==null">
+    		 <div class="p-a-md">
+      			<div class="row m-t">
+				<h1 class="text-muted"> Given Profile ID Not Found</h1>
+				</div>
+			</div>
+		<a class="btn btn-warning" href="${pageContext.request.contextPath}/u/users">Back</a>
+		</div>
+
+<div *ngIf="user!=null">
+	<div class="item">
+    <div class="item-bg">
+      <img src="" class="blur opacity-3">
+    </div>
+    <div class="p-a-md">
+      <div class="row m-t">
+        <div class="col-md-7">
+          <a href class="pull-left m-r-md">
+            <span class="avatar w-96">
+              <img data-name="{{(user.displayName)}}" src="" class="w-40 img-circle" style="width:100px;height:100px;" alt="...">
+              <i class="on b-white"></i>
+            </span>
+          </a>
+          <div class="clear m-b">
+            <h3 class="m-a-0 m-b-xs">{{user.displayName}}</h3>
+            <small>({{user.uid}})</small>
+            <p class="text-muted"><span class="m-r"><i class="fa fa-envelope m-r-xs"></i> {{user.username}}</span> <small><i class="fa fa-phone m-r-xs"></i>{{user.mobile}}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div class="row m-t">
+     <div class="col-md-12">
+       	<div class="btn btn-info" (click)="onUpdatePremiumPopup()">Premium Account</div>
+       	<div class="btn btn-success" (click)="sumbitUpdateMe('active')">Active Account</div>
+       	<div class="btn btn-warning" (click)="sumbitUpdateMe('inactive')">Inactive Account</div>
+       	<div class="btn btn-default" (click)="sumbitUpdateMe('delete')">Delete Account</div>
+       	<div style="float: right;" [routerLink]="['/users/all']" class="btn btn-primary">Back</div>
+       	</div>
+      </div>
+       <div class="item" *ngIf="user.premiumId>0">
+		    <div class="p-a-md">
+		      <div class="row m-t">
+		        <div class="col-md-12">
+		        	<div class="form-group row">
+		        		<label class="col-xs-4 text-muted control-label">Premium Pack</label>
+		        		<div class="col-xs-8"><span class="text-capitalize">{{user.membershipType}}</span></div>
+		        	</div>
+		        	<div class="form-group row">
+		        		<label class="col-xs-4 text-muted control-label">Premium Mobile Count</label>
+		        		<div class="col-xs-8"><span class="text-capitalize">{{user.mobileCount}}</span></div>
+		        	</div>
+		        	<div class="form-group row">
+		        		<label class="col-xs-4 text-muted control-label">Premium Horoscope Count</label>
+		        		<div class="col-xs-8"><span class="text-capitalize">{{user.horoscopeCount}}</span></div>
+		        	</div>
+		        	<div class="form-group row">
+		        		<label class="col-xs-4 text-muted control-label">Premium Expired on</label>
+		        		<div class="col-xs-8"><span class="text-capitalize">{{user.expiredTime}}</span></div>
+		        	</div>
+		        </div>
+		      </div>
+		     </div>
+     	</div>
+  <div class="dker p-x">
+    <div class="row">
+      <div class="col-sm-6 pull-sm-6">
+        <div class="p-y-md clearfix nav-active-primary">
+          <ul class="nav nav-pills nav-sm">
+            <li class="nav-item active">
+              <a class="nav-link" href="#" data-toggle="tab" data-target="#tab_1">Activities</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="padding">
+    <div class="row">
+      <div class="col-sm-8 col-lg-9">
+        <div class="tab-content">
+          <div class="tab-pane p-v-sm active" id="tab_1">
+            <div id="history_time"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 col-lg-3">
+        <div>
+          <div class="box">
+              <div class="box-header">
+                <h3>Recent History</h3>
+              </div>
+              <div class="box-divider m-a-0"></div>
+              <div id="timelines"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

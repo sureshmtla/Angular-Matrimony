@@ -1,0 +1,47 @@
+.app-wrapper {
+    width: 100%;
+    overflow: hidden;
+    height: auto;
+}
+.app-header{
+    width: 100%;
+}
+.app-footer{
+    width: 100%;
+}
+.app-container {
+    width: 100%; /* calc( 100% - 569px ); */
+   /* background:#fff;*/
+}
+.app-left { 
+    display: none;
+    background:green;
+    
+}
+.app-right{
+    display: none;
+    background:blue;
+}
+
+.app-wrapper.left-active .app-container {
+    margin-left: 285px;
+}
+.app-wrapper.left-active .app-left {
+    display: block;
+    width: 270px;
+    position: fixed;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
+}
+.app-wrapper.right-active .app-container {
+    margin-right: 285px;
+}
+.app-wrapper.right-active .app-right {
+    display: block;
+    width: 270px;
+    position: fixed;
+    right: 0px;
+    height: 100%;
+    overflow: hidden;
+}

@@ -1,0 +1,167 @@
+<div class="home-page">
+    <div *ngIf="isSearch" class="row">
+      <div #searchEnabled></div>
+    </div>
+    <div *ngIf="!isSearch" class="row">
+      <div>
+          <div class="p-a white hide">
+              <h5 class="m-b-0 _300">Hi user, Welcome back</h5>
+              <small class="text-muted">Awesome uikit for your next project </small>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                    <div class="box text-center m-b-0">
+                    <div class="box-tool hide hidden">
+                          <ul class="nav">
+                            <li class="nav-item inline dropdown">
+                              <a class="nav-link text-muted" data-toggle="dropdown">
+                                <i class="material-icons md-18">&#xe164;</i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-scale pull-right dark">
+                                <a class="dropdown-item" href>Activities</a>
+                                <a class="dropdown-item" href>Feed</a>
+                                <a class="dropdown-item" href>Photo</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item">Follow</a>
+                              </div>
+                            </li>
+                          </ul>
+                      </div>
+                      <div class="p-a-md">
+                        <p> <img data-name="" src="{{(apiUrl)}}/image/{{(currentUser.uid)}}/1.jpg" class="img-circle w-56" style="width:100px;height:100px;" alt="..."></p>
+                        <a class="text-md block">{{currentUser.displayName}}</a>
+                        <p><small>{{currentUser.uid}}</small></p>
+                        <div class="hide hidden">
+                          <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                          <i class="fa fa-facebook"></i>
+                          <i class="fa fa-facebook indigo"></i>
+                        </a>
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                          <i class="fa fa-twitter"></i>
+                          <i class="fa fa-twitter light-blue"></i>
+                        </a>
+                        <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                          <i class="fa fa-google-plus"></i>
+                          <i class="fa fa-google-plus red"></i>
+                        </a>
+                        </div>
+                      </div>
+                      <div class="row no-gutter b-t">
+                      <div class="col-4 b-r" [class.active-bg]="selectedIndex === 5">
+                        <a class="p-a block text-center" (click)="getAllMatchesData('other','Interested',5)" ui-toggle-class>
+                          <i class="material-icons md-24 text-muted m-v-sm inline">&#xe7fc;</i>
+                          <i class="material-icons md-24 text-danger m-v-sm none">&#xe7fb;</i>
+                          <span class="block">Received</span>
+                        </a>
+                      </div>
+                      <div class="col-4 b-r" [class.active-bg]="selectedIndex === 6">
+                        <a class="p-a block text-center" (click)="getAllMatchesData('me','shortlist',6)" ui-toggle-class>
+                          <i class="material-icons md-24 text-muted m-v-sm none">&#xe87e;</i>
+                          <i class="material-icons md-24 text-danger m-v-sm inline">&#xe87d;</i>
+                          <span class="block">Short List Me</span>
+                        </a>
+                      </div>
+                      <div class="col-4" [class.active-bg]="selectedIndex === 7">
+                        <a class="p-a block text-center" (click)="getAllMatchesData('me','Interested',7)" ui-toggle-class>
+                          <i class="material-icons md-24 text-muted m-v-sm inline">&#xe0cb;</i>
+                          <i class="material-icons md-24 text-danger m-v-sm none">&#xe0b7;</i>
+                          <span class="block">Interest Sent</span>
+                        </a>
+                      </div>
+                     </div>
+                    </div>
+                    
+                    
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card m-b-0">
+              <div class="card-header p-a-0" role="tab" id="headingMessage">
+                <h5 class="m-a-0 p-a-0">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseMessage" aria-expanded="true" aria-controls="collapseMessage">
+                    <div class="p-a-1">Request Received</div>
+                  </a>
+                </h5>
+              </div>
+          
+              <div id="collapseMessage" class="collapse in" role="tabpanel" aria-labelledby="headingMessage">
+                <div class="card-block">
+                    <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane active" id="msgReceive" role="tabpanel">
+                   <div class="list-group m-b">
+                        <a  (click)="getAllMatchesData('other','Interested',8)"  [class.active-bg]="selectedIndex === 8" class="list-group-item b-l-warning">
+                          <span class="pull-right label text-warning"></span> Interest Received
+                        </a>
+                        <a (click)="getAllMatchesData('me','Accepted',9)" [class.active-bg]="selectedIndex === 9" class="list-group-item b-l-success">
+                          <span class="pull-right label success"></span> Received Acceptance 
+                        </a>
+                        <a (click)="getAllMatchesData('me','Rejected',10)" [class.active-bg]="selectedIndex === 10" class="list-group-item b-l-info">
+                          <span class="pull-right label text-info"></span> Received Declined
+                        </a>
+                       </div>
+                  </div>
+                </div>
+                </div>
+              </div> 
+               <div class="card-header p-a-0" role="tab" id="headingMessage2">
+                <h5 class="m-a-0 p-a-0">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseMessage2" aria-expanded="true" aria-controls="collapseMessage2">
+                    <div class="p-a-1">Request Sent</div>
+                  </a>
+                </h5>
+              </div>
+          
+              <div id="collapseMessage2" class="collapse" role="tabpanel" aria-labelledby="headingMessage2">
+                <div class="card-block">
+                    <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane active" id="msgReceive" role="tabpanel">
+                   <div class="list-group m-b">
+                        
+                        <a (click)="getAllMatchesData('other','Accepted',11)" [class.active-bg]="selectedIndex === 11" class="list-group-item b-l-success">
+                          <span class="pull-right label success"></span> Sent Accepted
+                        </a>
+                        <a (click)="getAllMatchesData('other','shortlist',12)" [class.active-bg]="selectedIndex === 12" class="list-group-item b-l-danger">
+                          <span class="pull-right label text-danger"></span> Shortlist
+                        </a>
+                        <a (click)="getAllMatchesData('other','Rejected',13)" [class.active-bg]="selectedIndex === 13" class="list-group-item b-l-info">
+                          <span class="pull-right label text-info"></span> Sent Declined 
+                        </a>
+                       </div>
+                  </div>
+                </div>
+                </div>
+              </div> 
+            </div>
+           
+          </div>
+                    <!-- Nav tabs -->
+                    
+                   
+                  </div>
+              <div class="col-md-8 padding-left-0">
+              
+              
+             <div class="btn-group btn-group-justified actlink" role="group" aria-label="Justified button group" style="font-size:14px;">
+             <div class="btn btn-info" [class.active]="selectedIndex === 0"  style="font-size: 0.8rem;" (click)="getAllData(0)"><div class="h3 hide">0</div>Latest matches</div>
+             <div class="btn btn-info" [class.active]="selectedIndex === 1" style="font-size: 0.8rem;" (click)="getAllMatchesData('not','Viewed',1)"><div class="h3 hide">0</div>Yet to be viewed</div>
+             <div class="btn btn-info" [class.active]="selectedIndex === 2" style="font-size: 0.8rem;" (click)="getAllData(2)"><div class="h3 hide">0</div>Recently updated</div>
+             <div class="btn btn-info" [class.active]="selectedIndex === 3" style="font-size: 0.8rem;" (click)="getAllMatchesData('me','Viewed',3)"><div class="h3 hide">0</div>Viewed</div>
+             <div class="btn btn-info" [class.active]="selectedIndex === 4" style="font-size: 0.8rem;" (click)="getAllMatchesData('other','ViewedAll',4)"><div class="h3 hide">0</div>Viewed Me</div>
+             </div>
+           
+             <div *ngIf="loadingdiv" style="text-align: center;width:100%;"><img src="assets/images/loading.gif"></div>
+            <div id="lMatches" #matchesContainer> </div>
+            
+          </div>
+          
+          
+
+
+
+
+        
+        
+    </div>
+  </div>
+</div>
+</div>

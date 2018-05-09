@@ -1,0 +1,34 @@
+
+<div class="app-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <layout-header></layout-header>
+            <flash-messages></flash-messages>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+                <div class="loading-overlay" #spinnerElement style="display:none;position: fixed;width: 25px;right: 0;left: 0;margin: auto;font-size: 20px;z-index:99999;">
+                        <!-- md-spinner is short for <md-progress-circle mode="indeterminate"></md-progress-circle> -->
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+        </div>
+        <div class="col-12">
+            <div class="app-left">
+                <layout-leftbar></layout-leftbar>
+            </div>
+            <div class="app-container">
+                <router-outlet></router-outlet>
+            </div>
+            <div class="app-right">
+                <layout-rightbar></layout-rightbar>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <layout-footer></layout-footer>
+        </div>
+    </div>
+</div>

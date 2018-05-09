@@ -1,0 +1,209 @@
+<div style="height:80px">
+<nav class="navbar navbar-expand-lg mb-4 top-bar navbar-static-top sps sps--blw">
+  <div class="container">
+<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse1" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<a class="navbar-brand mx-auto" href="#">R<span> Matrimony</span></a>
+<div class="collapse navbar-collapse" id="navbarCollapse1">
+  <ul class="navbar-nav ml-auto">
+  <li class="nav-item">
+    <div style="padding:12px 0px;">
+      <list-errors [errors]="sginInErrors"></list-errors>
+      <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+        <fieldset [disabled]="isSubmitting">
+            <div style="float: left;padding:2px;"><input formControlName="username" placeholder="Username/Email" class="form-control form-control-sm" type="text" /></div>
+            <div style="float: left;padding:2px;"><input formControlName="password" placeholder="Password" class="form-control form-control-sm" type="password" /></div>
+           
+        </fieldset>
+        <div style="float: left;padding: 5px 2px;cursor: pointer;">
+            <a [routerLink]="['/forget']">Forget Password?</a>
+        </div>
+        <div style="float: right;padding:2px;">
+            <button class="btn btn-sm btn-primary pull-xs-right" [disabled]="!authForm.valid" type="submit">Sign In</button>
+            </div>
+      </form>
+    </div>
+   </li> 
+  </ul>
+</div>
+</div>
+</nav>
+</div>
+<!-- Swiper Silder
+    ================================================== -->
+<!-- Slider main container -->
+<div class="swiper-container main-slider" id="myCarousel" style="height:500px;" detect-scroll (onScroll)="handleScroll($event)" [bottomOffset]="200" [topOffset]="200">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide slider-bg-position" style="background:url('assets/images/slide.png')" data-hash="slide1">
+
+<div style="position: absolute;top: 120px;display:none;">
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div style="position: absolute;right:50px;width: 420px;bottom: 70px;padding: 10px;border: 1px solid rgba(255, 249, 249, 0.55);background: rgba(240, 248, 255, 0.3);">
+    <div class="auth-page">
+        <div class="container page">
+          <div class="row">
+            <div class="col-md-12 col-xs-12" *ngIf="afReg">
+                <div class="text-xs-center">
+                    <div>Check your mail and proceed as per details</div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" *ngIf="!afReg">
+              <div class="text-xs-center">Your partner search begins with a<br/>FREE REGISTRATION!</div>
+              <list-errors [errors]="errors"></list-errors>
+              <form [formGroup]="signupForm" (ngSubmit)="submitUpForm()">
+                <fieldset [disabled]="isUpSubmitting">
+                  <fieldset class="form-group">
+                    <input
+                      formControlName="displayName"
+                      placeholder="Name"
+                      class="form-control form-control-lg"
+                      type="text" />
+                  </fieldset>
+                  <fieldset class="form-group">
+                    <input
+                      formControlName="username"
+                      placeholder="Username/Email"
+                      class="form-control form-control-lg"
+                      type="text" />
+                  </fieldset>
+                  <fieldset class="form-group">
+                    <input
+                      formControlName="mobile"
+                      placeholder="Mobile"
+                      class="form-control form-control-lg"
+                      type="number" />
+                  </fieldset>
+                  <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!signupForm.valid" type="submit">
+                    Sign up
+                  </button>
+                </fieldset>
+              </form> 
+             
+            </div>
+
+          </div>
+        </div>
+      </div>
+</div>
+    </div>
+
+  </div>
+  <!-- Add Pagination -->
+
+  <div class="swiper-pagination"></div>
+  <!-- Add Navigation -->
+
+</div>
+
+
+<div class="vertical-container">
+  <div class="box-title">Swiper</div>
+
+  <div class="content-container">
+    <swiper *ngIf="type == 'component' && show" overlay-controls [config]="config" (indexChange)="onIndexChange($event)">
+      <div *ngFor="let slide of slides" class="swiper-slide">
+        <div class="swiper-slide-content">{{slide}}</div>
+      </div>
+    </swiper>
+
+    <div *ngIf="type == 'directive' && show" class="swiper-container" [swiper]="config" (indexChange)="onIndexChange($event)">
+      <div class="swiper-wrapper">
+        <div *ngFor="let slide of slides" class="swiper-slide">
+          <div class="swiper-slide-content">{{slide}}</div>
+        </div>
+      </div>
+
+      <div [hidden]="config.scrollbar != '.swiper-scrollbar'" class="swiper-scrollbar"></div>
+      <div [hidden]="config.pagination != '.swiper-pagination'" class="swiper-pagination"></div>
+      <div [hidden]="config.prevButton != '.swiper-button-prev'" class="swiper-button-prev"></div>
+      <div [hidden]="config.nextButton != '.swiper-button-next'" class="swiper-button-next"></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- Benefits
+    ================================================== -->
+<section class="service-sec" id="benefits">
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="heading">
+      <h2><small>Benefits of Exercise</small>To enjoy the glow of good health, you must exercise</h2>
+    </div>
+        </div>
+      <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-6 text-sm-center service-block"> <i class="fa fa-plus" aria-hidden="true"></i>
+          <h3>Better Sleep</h3>
+          <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe.</p>
+        </div>
+        <div class="col-md-6 text-sm-center service-block"> <i class="fa fa-leaf" aria-hidden="true"></i>
+          <h3>Reduces Weight</h3>
+          <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe.</p>
+        </div>
+        <div class="col-md-6 text-sm-center service-block"> <i class="fa fa-leaf" aria-hidden="true"></i>
+          <h3>Improves Mood</h3>
+          <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe.</p>
+        </div>
+        <div class="col-md-6 text-sm-center service-block"> <i class="fa fa-bell" aria-hidden="true"></i>
+          <h3>Boosts Energy</h3>
+          <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe.</p>
+        </div>
+        </div>
+      </div>
+      <div class="col-md-4"> <img src="http://grafreez.com/wp-content/temp_demos/burnout/img/side-01.jpg" class="img-fluid" /> </div>
+    </div>
+    <!-- /.row -->
+  </div>
+</section>
+
+<!-- About
+    ================================================== -->
+<section class="about-sec parallax-section" id="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h2><small>Who We Are</small>About<br>
+          Our Blog</h2>
+      </div>
+      <div class="col-md-4">
+        <p>To enjoy good health, to bring true happiness to one's family, to bring peace to all, one must first discipline and control one's own mind. If a man can control his mind he can find the way to Enlightenment, and all wisdom and virtue will naturally come to him.</p>
+        <p>Saving our planet, lifting people out of poverty, advancing economic growth... these are one and the same fight. We must connect the dots between climate change, water scarcity, energy shortages, global health, food security and women's empowerment. Solutions to one problem must be solutions for all.</p>
+      </div>
+      <div class="col-md-4">
+        <p>Our greatest happiness does not depend on the condition of life in which chance has placed us, but is always the result of a good conscience, good health, occupation, and freedom in all just pursuits.</p>
+        <p>Being in control of your life and having realistic expectations about your day-to-day challenges are the keys to stress management, which is perhaps the most important ingredient to living a happy, healthy and rewarding life.</p>
+        <p><a href="#" class="btn btn-transparent-white btn-capsul">Explore More</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <section class="action-sec">
+          <div class="container">
+              <div class="action-box text-center"><h2>GET FULL FREE VERSION HERE </h2><a class="btn btn-success" href="http://grafreez.com/394/fitness-website-template/" target="_blank">Free Bootstrap Templates</a></div>
+          </div>
+      </section>
+  
+

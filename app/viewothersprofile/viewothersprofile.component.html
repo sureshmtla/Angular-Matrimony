@@ -1,0 +1,388 @@
+<div class="p-a-md">
+  <div class="row"> 
+    <div class="col-md-12">
+        <div class="row" style="padding:10px;border-bottom: 1px solid #ddd;background: #fafafa;">
+          <div class="col-md-8">
+              <div class="text-capitalize" style="font-weight:bold;">
+                {{contact.firstName}} {{contact.lastName}}
+                <span class="text-muted"> ( {{contact.uid}} )</span>
+              </div>
+              <div *ngIf="(profileView.status=='Viewed')" class="text-muted">Viewed on {{profileView.viewedOn}}</div>
+          </div>
+      </div>
+      <div class="row m-t" style="position:relative;">
+          <div class="item-bg">
+              <img src="{{(apiUrl)}}/image/{{(currentUser.uid)}}/1.jpg" class="blur opacity-3">
+            </div>
+        <div class="col-md-12" style="position: absolute;bottom:0px;background:#e9f5ff;height: 150px;padding: 20px;text-align: right;">
+              <div style="position: absolute;z-index: 1;right: 50px;bottom: 10px;">
+                  <img *ngIf="reqProcessing" src="assets/images/loading2.gif" style="height:80px;width:120px;">
+                  <ng-container *ngIf="(profileView.status=='Accepted' || profileView.ostatus=='Accepted'); else firstd;">
+                      <div *ngIf="(profileView.status=='Accepted' && profileView.createdById!=currentUser.userId) || (profileView.ostatus=='Accepted' && profileView.createdById==currentUser.userId)" class="text-capitalize interest-sent">{{profileView.firstName}} {{profileView.lastName}} is <span class="btn btn-info btn-sm">Accepted</span> in your interest.</div>
+                      <div *ngIf="(profileView.status=='Accepted' && profileView.createdById==currentUser.userId) || (profileView.ostatus=='Accepted' && profileView.createdById!=currentUser.userId)" class="text-capitalize interest-sent">You have <span class="btn btn-info btn-sm">Accepted</span> {{(currentUser.gender=='Male'?'her':'his')}} profile.</div>
+                </ng-container>
+                <ng-template #firstd>
+                <ng-container *ngIf="(profileView.status=='Rejected' || profileView.ostatus=='Rejected'); else secondd;">
+                      <div *ngIf="(profileView.status=='Rejected' && profileView.createdById!=currentUser.userId) || (profileView.ostatus=='Rejected' && profileView.createdById==currentUser.userId)" class="text-capitalize interest-sent">{{profileView.firstName}} {{profileView.lastName}} is <span class="btn btn-info btn-sm">declined</span> in your interest.</div>
+                  <ng-container  *ngIf="(profileView.status=='Rejected' && profileView.createdById==currentUser.userId) || (profileView.ostatus=='Rejected' && profileView.createdById!=currentUser.userId)">
+                      <div  class="text-capitalize interest-sent">You have <span class="btn btn-info btn-sm">declined</span> {{(currentUser.gender=='Male'?'her':'his')}} profile.</div>
+                      <div>I like your profile and I want to get in touch with you.<br>Please accept if interested.</div>
+                      <div>Changed your mind? <div class="btn btn-primary btn-sm" (click)="updateProfileStatus(profileView.uid,'Accepted',profileView);">ACCEPT</div></div>
+                  </ng-container>
+                  </ng-container>
+                </ng-template>
+                <ng-template #secondd>
+                <ng-container *ngIf="(profileView.status=='Interested' || profileView.ostatus=='Interested');else thirdd;">
+                    <ng-container *ngIf="(profileView.status=='Interested' && profileView.createdById!=currentUser.userId) || (profileView.ostatus=='Interested' && profileView.createdById==currentUser.userId); then both; else mediv;"></ng-container>
+                    <ng-template #both>
+                        <div class="text-muted interest-sent">I like your profile and I want to get in touch with you.<br>Please accept if interested?.</div>
+                        <div><div class="btn btn-primary btn-sm" (click)="updateProfileStatus(profileView.uid,'Accepted',profileView);">Accept</div>&nbsp;&nbsp;<div class="btn btn-warning btn-sm" (click)="updateProfileStatus('profileView.uid','Rejected',profileView);">Declined</div></div>
+                    </ng-template>
+
+                    <ng-template #mediv>
+                      <div class="text-capitalize text-muted interest-sent">{{profileView.firstName}} {{profileView.lastName}} is yet to respond to your interest.</div>
+                    </ng-template>
+                    </ng-container>
+                </ng-template>
+                <ng-template  #thirdd>
+                <ng-container *ngIf="((profileView.status=='Viewed' || profileView.ostatus=='Viewed') && profileView.viewedOn!='');else fourthd;">
+                    <div class="text-capitalize viewdiv"><span>Recently Viewed on</span><br /><span class="date">{{profileView.viewedOn}}</span></div>
+                    <span class="interet-req">Interested in {{(currentUser.gender=='Male'?'her':'him')}}? </span>
+                    <div class="btn btn-primary btn-md" (click)="updateProfileStatus(profileView.uid,'Interested',profileView);">Yes</div>
+                    <div class="btn btn-default btn-md" (click)="updateProfileStatus(profileView.uid,'Shortlist',profileView);">Short List</div>
+                </ng-container>
+                </ng-template>
+                <ng-template #fourthd>
+                    <ng-container *ngIf="(profileView.status=='Shortlist' || profileView.ostatus=='Shortlist'); else fifththd;">
+                        <div *ngIf="(profileView.status=='Shortlist' && profileView.createdById!=currentUser.userId) || (profileView.ostatus=='Shortlist' && profileView.createdById==currentUser.userId)" class="text-capitalize interest-sent">{{profileView.firstName}} {{profileView.lastName}} is <span class="btn btn-info btn-sm">Short List</span> in your profile.</div>
+                        <div *ngIf="(profileView.status=='Shortlist' && profileView.createdById==currentUser.userId) || (profileView.ostatus=='Shortlist' && profileView.createdById!=currentUser.userId)" class="text-capitalize interest-sent">You have <span class="btn btn-info btn-sm">Short List</span> {{(currentUser.gender=='Male'?'her':'his')}} profile.</div>
+                        <div class="interet-req">Interested in {{(currentUser.gender=='Male'?'her':'him')}}? </div>
+                        <div class="btn btn-primary btn-md" (click)="updateProfileStatus(profileView.uid,'Interested',profileView);">Yes</div>
+                        <div class="btn btn-default btn-md" (click)="updateProfileStatus(profileView.uid,'Shortlist',profileView);">Short List</div>
+                    </ng-container>
+                </ng-template>
+                <ng-template #fifththd>
+                  <span class="interet-req">Interested in {{(currentUser.gender=='Male'?'her':'him')}}?<br></span>
+                  <div class="btn btn-primary btn-md" (click)="updateProfileStatus(profileView.uid,'Interested',profileView);">Yes</div>
+                  <div class="btn btn-default btn-md" (click)="updateProfileStatus(profileView.uid,'Shortlist',profileView);">Short List</div>
+                </ng-template>
+            </div>
+       </div>
+         <div class="col-md-4" id="slider">
+              <div class="vertical-container">
+                  <div class="content-container">
+                    <swiper   overlay-controls [config]="config" (indexChange)="onIndexChange($event)">
+                      <div *ngFor="let imgurl of imgURLs" class="swiper-slide">
+                        <div class="swiper-slide-content" style="text-align:center;">
+                            <img data-src="{{(imgurl)}}" class="swiper-lazy" style="height: 300px;width: auto;padding: 10px;">
+                        </div>
+                      </div>
+                    </swiper>
+                
+                    <div class="swiper-scrollbar"></div>
+                    <div class="swiper-pagination"></div>
+
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    </div>
+                  </div>
+
+                 <div id="myCarousel" class="carousel slide hide">
+                     <!-- main slider carousel items -->
+                     <div class="carousel-inner">
+                         <div class="active item carousel-item" data-slide-number="0">
+                           <img class="d-block img-fluid img-responsive" alt="{{(profileView.firstName)}}" src="{{(apiUrl)}}/image/{{(profileView.uid)}}/1.jpg"   style="max-height:250px;"/>
+                         </div>
+                     </div>
+                     <!-- main slider carousel nav controls -->
+
+
+                     <ul class="carousel-indicators list-inline" style="overflow:hidden;">
+                         <li class="list-inline-item active">
+                             <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#myCarousel" style="top: 50%;">
+                                 <img class="img-fluid thumb-img-size" alt="{{(profileView.firstName)}}" data-name="{{(profileView.firstName)}}" src="{{(apiUrl)}}/image/{{(profileView.uid)}}/1.jpg"  />
+                             </a>
+                         </li>
+
+                     </ul>
+             </div>
+         </div>
+        <div class="col-md-8">
+        <div class="row">
+        <div class="col-10">
+        <div style="height:230px;padding:10px;overflow:hidden;font-size: 18px;color: #777777;">
+         <ng-container *ngIf="contact.profileFor!=''">
+            <div class="row">
+         <div class="col-2 text-muted">Profile For</div>
+         <div class="col-10 text-capitalize">{{contact.profileFor}}</div>
+         </div>
+       </ng-container>
+       <ng-container *ngIf="(contact.age!=null && contact.age!='' && contact.heightInc!=null && contact.heightInc!='')">
+          <div class="row">
+        <div class="col-2 text-muted">Age,Height</div>
+        <div class="col-10 text-capitalize short-text-color">{{contact.age}} yrs, {{contact.heightInc}} ft.</div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="(profileView.course!=null && profileView.course!='')">
+          <div class="row">
+        <div class="col-2 text-muted">Education</div>
+        <div class="col-10 text-capitalize short-text-color">{{profileView.course}}</div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="(profileView.occupation!=null && profileView.occupation!='')">
+          <div class="row">
+        <div class="col-2 text-muted">Occupation</div>
+        <div class="col-10 text-capitalize short-text-color">{{profileView.occupation}}</div>
+        </div>
+      </ng-container>
+      <div class="row">
+       <div class="col-12 text-muted">About Me</div>
+       <div class="col-12 text-capitalize">{{contact.notes}}</div>
+       </div>
+       </div>
+       </div>
+       <div class="col-2" style="padding-top: 3px;">
+          <div class="block" style="float: right;">
+              <span *ngIf="profileView.requestMessage==0" title="send request to messaging" (click)="updateReq(profileView.uid,'message',profileView);" class="btn btn-icon btn-social rounded white btn-md">
+                <i class="fa fa-envelope"></i>
+                <i class="fa fa-envelope indigo"></i>
+              </span>
+              <span *ngIf="profileView.requestMessage==1" title="already sent request to messaging" class="btn btn-icon rounded white btn-md">
+                <i class="fa fa-envelope indigo"></i>
+              </span>
+              <br>
+              <span *ngIf="profileView.requestMobile==0" title="send request to mobile number" (click)="updateReq(profileView.uid,'mobile',profileView);" class="btn btn-icon btn-social rounded white btn-md">
+                <i class="fa fa-mobile"></i>
+                <i class="fa fa-mobile light-blue"></i>
+              </span>
+              <span *ngIf="(profileView.requestMobile==1)" title="already sent request to mobile number" class="btn btn-icon rounded white btn-md">
+                <i class="fa fa-mobile light-blue"></i>
+              </span>
+              <br>
+              <span *ngIf="(profileView.requestHoroscope==0)" title="send request to horoscope" (click)="updateReq(profileView.uid,'horoscope',profileView);" class="btn btn-icon btn-social rounded white btn-md">
+                <i class="fa fa-globe"></i>
+                <i class="fa fa-globe red"></i>
+              </span>
+              <span *ngIf="(profileView.requestHoroscope==1)" title="already sent request to horoscope" class="btn btn-icon rounded white btn-md">
+                <i class="fa fa-globe red"></i>
+              </span>
+              <br>
+              <!--
+              <span title="Mark profile as viewed" (click)="updateProfileStatus(profileView.uid,'Viewed',profileView);" class="btn btn-icon btn-social rounded white btn-md">
+                <i class="fa fa-info"></i>
+                <i class="fa fa-check cyan-600"></i>
+              </span>
+            -->
+          </div>
+           </div>
+
+       </div>
+        </div>
+     </div>
+    </div>
+</div>
+
+<div class="row">
+		<div class="col-md-8">
+  <ul class="timeline">
+    <li class="tl-header">
+      <div class="btn white" ui-toggle-class="timeline-center" ui-target=".timeline"></div>
+    </li>
+    <li class="tl-item">
+      <div class="tl-wrap b-success">
+        <span class="tl-date text-muted">About Me</span>
+        <div class="box-color text-color  p-a-sm">
+          <span class="arrow b-white left pull-top"></span>
+          <div id="oBasicView" *ngIf="contact!=null">
+              <ng-container *ngFor="let jArr of contactModule">
+                  <ng-container *ngIf="jArr.sectionId>0">
+                      <ng-container *ngFor="let cols of jArr.col" >
+                          <div class="col-{{ 12 / (jArr.col?.length) }} column-div">
+                              <ng-container *ngFor="let mf of cols.fields; let x = index" >
+                                    <ng-container *ngIf="mf.isActive==1 && (mf.view==null || mf.view=='' || mf.view.indexOf('View')!==-1)">
+                                      <div class="row">
+                                        <label class="col-3 text-capitalize text-muted">{{mf.label}}</label>
+                                        <div *ngIf="mf.isLocked==0" class="col-9 text-capitalize">{{contact[mf.name]}}</div>
+                                        <div *ngIf="mf.isLocked==1" (click)="showdetails('contact',mf.name,mf.label)" class="col-9 text-capitalize">************** <i class="fa fa-lock text-muted" aria-hidden="true"></i></div>
+                                      </div>
+                                    </ng-container>
+                              </ng-container>
+                          </div>
+                      </ng-container>
+                  </ng-container>
+                </ng-container>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="tl-item">
+      <div class="tl-wrap b-primary">
+        <span class="tl-date text-muted">Horoscope Details</span>
+        <div class="box-color text-color p-a-sm">
+            <span class="arrow b-white left pull-top hidden-left"></span>
+            <span class="arrow b-white right pull-top visible-left"></span>
+          <div class="box-body text-lt" id="oReligionView" *ngIf="religion!=null">
+              <ng-container *ngFor="let jArr of religionModule">
+                  <ng-container *ngIf="jArr.sectionId>0">
+                      <ng-container *ngFor="let cols of jArr.col" >
+                          <div class="col-{{ 12 / (jArr.col?.length) }} column-div">
+                              <ng-container *ngFor="let mf of cols.fields; let x = index" >
+                                    <ng-container *ngIf="mf.isActive==1 && (mf.view==null || mf.view=='' || mf.view.indexOf('View')!==-1)">
+                                      <div class="row">
+                                        <label class="col-3 text-capitalize text-muted">{{mf.label}}</label>
+                                        <div *ngIf="mf.isLocked==0" class="col-9 text-capitalize">{{religion[mf.name]}}</div>
+                                        <div *ngIf="mf.isLocked==1" (click)="showdetails('religion',mf.name,mf.label)" class="col-9 text-capitalize">************** <i class="fa fa-lock text-muted" aria-hidden="true"></i></div>
+                                      </div>
+                                    </ng-container>
+                              </ng-container>
+                          </div>
+                      </ng-container>
+                  </ng-container>
+                </ng-container>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="tl-item tl-left">
+      <div class="tl-wrap b-primary">
+        <span class="tl-date text-muted">Family Details</span>
+        <div class="box-color p-a-sm">
+            <span class="arrow b-white left pull-top hidden-left"></span>
+            <span class="arrow b-white right pull-top visible-left"></span>
+          <div class="text-lt" id="oFamilyView" *ngIf="family!=null">
+              <ng-container *ngFor="let jArr of familyDetailsModule">
+                  <ng-container *ngIf="jArr.sectionId>0">
+                      <ng-container *ngFor="let cols of jArr.col" >
+                          <div class="col-{{ 12 / (jArr.col?.length) }} column-div">
+                              <ng-container *ngFor="let mf of cols.fields; let x = index" >
+                                    <ng-container *ngIf="mf.isActive==1 && (mf.view==null || mf.view=='' || mf.view.indexOf('View')!==-1)">
+                                      <div class="row">
+                                        <label class="col-3 text-capitalize text-muted">{{mf.label}}</label>
+                                        <div  *ngIf="mf.isLocked==0" class="col-9 text-capitalize">{{family[mf.name]}}</div>
+                                        <div  *ngIf="mf.isLocked==1" (click)="showdetails('family',mf.name,mf.label)" class="col-9 text-capitalize">************** <i class="fa fa-lock text-muted" aria-hidden="true"></i></div>
+                                      </div>
+                                    </ng-container>
+                              </ng-container>
+                          </div>
+                      </ng-container>
+                  </ng-container>
+                </ng-container>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="tl-item">
+      <div class="tl-wrap b-primary">
+        <span class="tl-date text-muted">Professional</span>
+        <div class="box-color p-a-sm">
+          <span class="arrow b-white left pull-top"></span>
+          <div class="text-lt p-x m-b-sm">Professional Details</div>
+          <div class="p-a b-t b-light" id="oProfessionView" *ngIf="profession!=null">
+              <ng-container *ngFor="let jArr of professionalinformationModule">
+                  <ng-container *ngIf="jArr.sectionId>0">
+                      <ng-container *ngFor="let cols of jArr.col" >
+                          <div class="col-{{ 12 / (jArr.col?.length) }} column-div">
+                              <ng-container *ngFor="let mf of cols.fields; let x = index" >
+                                    <ng-container *ngIf="mf.isActive==1 && (mf.view==null || mf.view=='' || mf.view.indexOf('View')!==-1)">
+                                      <div class="row">
+                                        <label class="col-3 text-muted text-capitalize">{{mf.label}}</label>
+                                        <div *ngIf="mf.isLocked==0" class="col-9 text-capitalize">{{profession[mf.name]}}</div>
+                                        <div *ngIf="mf.isLocked==1" (click)="showdetails('profession',mf.name,mf.label)" class="col-9 text-capitalize">************** <i class="fa fa-lock text-muted" aria-hidden="true"></i></div>
+                                      </div>
+                                    </ng-container>
+                              </ng-container>
+                          </div>
+                      </ng-container>
+                  </ng-container>
+                </ng-container>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="tl-item tl-left">
+      <div class="tl-wrap b-success">
+        <span class="tl-date text-muted">Location</span>
+        <div class="tl-content box-color block">
+          <span class="arrow b-white left pull-top hidden-left"></span>
+          <span class="arrow b-white right pull-top visible-left"></span>
+          <div class="p-x m-b-sm font-bold">Native Details</div>
+          <div class="box-body b-t b-info" id="oLocationView" *ngIf="location!=null">
+              <ng-container *ngFor="let jArr of locationdetailsModule">
+                  <ng-container *ngIf="jArr.sectionId>0">
+                      <ng-container *ngFor="let cols of jArr.col">
+                          <div class="col-{{ 12 / (jArr.col?.length) }} column-div">
+                              <ng-container *ngFor="let mf of cols.fields; let x = index" >
+                                    <ng-container *ngIf="mf.isActive==1 && (mf.view==null || mf.view=='' || mf.view.indexOf('View')!==-1)">
+                                      <div class="row">
+                                        <label class="col-3 text-capitalize text-muted">{{mf.label}}</label>
+                                        <div *ngIf="mf.isLocked==0" class="col-9 text-capitalize">{{location[mf.name]}}</div>
+                                        <div *ngIf="mf.isLocked==1" (click)="showdetails('location',mf.name,mf.label)" class="col-9 text-capitalize">************** <i class="fa fa-lock text-muted" aria-hidden="true"></i></div>
+                                      </div>
+                                    </ng-container>
+                              </ng-container>
+                          </div>
+                      </ng-container>
+                  </ng-container>
+                </ng-container>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="tl-item tl-left">
+      <div class="tl-wrap b-warn">
+        <span class="tl-date text-muted">LifeStyle</span>
+        <div class="box-color text-color p-a-sm">
+         
+          <span class="arrow b-white left pull-top hidden-left"></span>
+          <span class="arrow b-white right pull-top visible-left"></span>
+          <div class="text-lt" id="oLifeStyleView" *ngIf="lifeStyle!=null">
+              <ng-container *ngFor="let jArr of lifeStyleModule">
+                  <ng-container *ngIf="jArr.sectionId>0">
+                      <ng-container *ngFor="let cols of jArr.col" >
+                          <div class="col-{{ 12 / (jArr.col?.length) }} column-div">
+                              <ng-container *ngFor="let mf of cols.fields; let x = index" >
+                                    <ng-container *ngIf="mf.isActive==1 && (mf.view==null || mf.view=='' || mf.view.indexOf('View')!==-1)">
+                                      <div class="row">
+                                        <label class="col-3 text-capitalize text-muted">{{mf.label}}</label>
+                                        <div *ngIf="mf.isLocked==0" class="col-9 text-capitalize">{{lifeStyle[mf.name]}}</div>
+                                        <div *ngIf="mf.isLocked==1" (click)="showdetails('lifestyle',mf.name,mf.label)" class="col-9 text-capitalize">************** <i class="fa fa-lock text-muted" aria-hidden="true"></i></div>
+                                      </div>
+                                    </ng-container>
+                              </ng-container>
+                          </div>
+                      </ng-container>
+                  </ng-container>
+                </ng-container>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="tl-header">
+      <div class="btn btn-sm white btn-rounded"></div>
+    </li>
+  </ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="popupModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button id="closeExampleModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+            </button>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closemodal" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<button id="popupTrigger" type="button" class="btn btn-primary hide hidden" data-toggle="modal" data-target="#popupModal">&nbsp;</button>
+

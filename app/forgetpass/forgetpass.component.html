@@ -1,0 +1,36 @@
+
+
+<div class="auth-page slider-bg-position" style="background:url('assets/images/slide.png')" data-hash="slide1" >
+  <div class="container page">
+    <div class="row">
+        <div class="col-md-12 col-xs-12" *ngIf="afReg">
+            <div class="text-xs-center">
+                <div>Check your mail and proceed as per details</div>
+                <a [routerLink]="['/login']">continue login!</a>
+            </div>
+        </div>
+      <div class="col-md-6 offset-md-3 col-xs-12" *ngIf="!afReg">
+        <h1 class="text-xs-center">Forget Password</h1>
+        <p class="text-xs-center">
+          <a [routerLink]="['/login']">Have an account?</a>
+        </p> 
+        <list-errors [errors]="errors"></list-errors>
+        <form [formGroup]="forgetForm" (ngSubmit)="submitForm()">
+          <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group">
+              <input
+                formControlName="username"
+                placeholder="Username/Email"
+                class="form-control form-control-lg"
+                type="text" />
+            </fieldset>
+            <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!forgetForm.valid" type="submit">
+             Reset
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

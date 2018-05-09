@@ -1,0 +1,30 @@
+
+<div class="">
+    <div>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand">Upload Image</a>
+          </nav>
+    </div>
+    <div class="row m-0 p-1">
+          <div class="col-8">
+              <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+          </div> 
+          <div class="col-4">
+              <div class="file-upload"> 
+                <label for="custom-input">
+                  <span class="btn btn-info">Browse</span>
+                  <input class="hide" id="custom-input" type="file" (change)="fileChangeListener($event)">
+                </label> 
+              </div>
+              <span class="result rounded" *ngIf="data.image" >
+                  <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+              </span>
+              <div style="position:absolute;bottom:5px;">
+                  <div class="btn btn-primary" style="margin: 5px 0px;" (click)="uploadFile()">uploadFile</div>
+                  <div class="btn btn-secondary"  (click)="closeModal()">Close</div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+  

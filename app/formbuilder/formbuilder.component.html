@@ -1,0 +1,92 @@
+<div class='row'>
+    <div class='col-12'><div class="btn btn-primary" (click)="updateFieldOrders()">Update</div></div>
+    <div class='col-9 module-div'>
+        <div *ngFor="let jArr of jsonArr">
+            <div *ngIf="jArr.sectionId>0">
+                <div class="panel-heading section-div" [attr.sectionid]="jArr.sectionId">
+                    {{jArr.sectionId}} - {{jArr.sectionName}}
+                </div>
+                <div class="panel-body">
+                    <div *ngFor="let cols of jArr.col" >
+                        <div class="col-{{ 12 / (jArr.col?.length) }} column-div">
+                        <div class="list-group"  [dragula]='"fifth-bag"'>
+                            <div *ngFor="let mf of cols.fields; let x = index" >
+                                <div *ngIf="mf.isActive==1"  class="list-group-item p-0" >
+                                    <ng-container *ngIf="mf.type=='select'" (appEcreate)="addSubField(mf)"></ng-container>
+                                        <div class="box m-0 form-field fld_{{(mf.id)}}" [attr.id]="mf.id">
+                                        <div class="box-header pdot5 primary">
+                                            <h3> {{mf.label}} </h3>
+                                            <small>{{mf.label}}</small>
+                                            <div class="box-tool">
+                                            <ul class="nav">
+                                                <li class="nav-item inline">
+                                                <span class="nav-link" (click)="openPopup(mf.id)">
+                                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                                </span>
+                                                </li>
+                                                <li class="nav-item inline">
+                                                    <a class="nav-link" (click)="deleteField(mf.id)">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item inline dropdown">
+                                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <span class="dropdown-item" (click)="openPopup(mf.id)">Edit</span>
+                                                        <span class="dropdown-item">Required</span>
+                                                        <div class="dropdown-divider"></div>
+                                                        <span class="dropdown-item" (click)="deleteField(mf.id)">Delete</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class='col-3 ul-two-cal-container'>
+        <div *ngFor="let jArr of jsonArr">
+            <div class="panel panel-warning">
+                <div class="panel-body">
+                    <div *ngFor="let cols of jArr.col" >
+                        <div class="list-group" [dragula]='"fifth-bag"'>
+                            <ng-container *ngFor="let mf of cols.fields" >
+                                <div *ngIf="mf.isActive<=0" class="list-group-item form-field fld_{{(mf.id)}}" [attr.id]="mf.id" [attr.mfLabel]="mf.label" [attr.mfname]="mf.name">{{mf.label}}</div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button id="closeExampleModal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+            </button>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closemodal" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" (click)="postFormData()">Save changes</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<button id="modalTrigger" type="button" class="btn btn-primary hide hidden" data-toggle="modal" data-target="#exampleModal">&nbsp;</button>
+
+
+

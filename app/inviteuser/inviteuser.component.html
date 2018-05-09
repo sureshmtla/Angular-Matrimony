@@ -1,0 +1,40 @@
+
+<div class="">
+  <div>
+      <nav class="navbar navbar-light bg-light">
+          <a class="navbar-brand">{{context.title}}</a>
+        </nav>
+  </div>
+  <div class="row m-0 p-1">
+  	<list-errors [errors]="errors"></list-errors>
+    <form [formGroup]="inviteForm" (ngSubmit)="submitForm()">
+      <fieldset [disabled]="isSubmitting">
+        <fieldset class="form-group">
+          <input
+            formControlName="displayName"
+            placeholder="Name"
+            class="form-control form-control-lg"
+            type="text" />
+        </fieldset>
+        <fieldset class="form-group">
+          <input
+            formControlName="username"
+            placeholder="Email/Username"
+            class="form-control form-control-lg"
+            type="text" />
+        </fieldset>
+        <fieldset class="form-group">
+          <input
+            formControlName="mobile"
+            placeholder="Mobile"
+            class="form-control form-control-lg"
+            type="number" />
+        </fieldset>
+        <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!inviteForm.valid" type="submit">
+        Update
+        </button>
+        <div class="btn btn-lg btn-default pull-xs-right" (click)="closeModal()">Cancel</div>
+      </fieldset>
+    </form>
+</div>
+</div>
